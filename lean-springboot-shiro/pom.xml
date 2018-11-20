@@ -5,7 +5,7 @@
 	<artifactId>lean-springboot-shiro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
-	<!-- 此处指定main方法类的全路径 -->
+	<!-- 此处指定main方法类的全路径。 -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>com.wql.App</start-class>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- status: 这个用于设置log4j2自身内部的信息输出,可以不设置,当设置成trace时, 会看到log4j2内部各种详细输出 monitorInterval: 
+	Log4j能够自动检测修改配置文件和重新配置本身, 设置间隔秒数。 注：本配置文件的目标是将不同级别的日志输出到不同文件，最大2MB一个文件， 文件数据达到最大值时，旧数据会被压缩并放进指定文件夹 -->
+<Configuration status="WARN" monitorInterval="600">
+
+	<Properties>
+		<!-- *** 唯一修改点，项目名称 -->
+		<Property name="PROJECT_NAME">
+			wql
+		</Property>
+		<!-- 日志保存目录 -->
+		<Property name="LOG_BASE_HOME">
+			/apps/var/jakarta/logs/
+		</Property>
+	</Properties>
+
+	<appenders>
+		<!--这个输出控制台的配置，这里输出除了warn和error级别的信息到System.out -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<!-- 控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch) -->
+			<ThresholdFilter level="debug" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<!-- 输出日志的格式 -->
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %5p] %c.%M %m%n" />
+		</Console>
+
+		<!-- 系统调试日志，也就是全量日志，按天备份一个日志 catalina.out -->
+		<!-- fileName为生成的文件名，x为路径，也可以采用相对路径模式，filePattern为时间到达后产生新日志，旧日志的文件名 -->
+		<RollingFile name="DebugFile" fileName="${LOG_BASE_HOME}${PROJECT_NAME}/catalina.out"
+			filePattern="${LOG_BASE_HOME}${PROJECT_NAME}/catalina_%d{yyyy-MM-dd}.out">
+			<!-- 输出格式 -->
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %5p] %c.%M %m%n" />
+			<Policies>
+				<!-- 每1天更新一次，此处查阅网上和官方示例中，都是以小时出现，我测试是以天为单位。（官方文档中说明按item类型是否是小时，但没找到在哪里设置item类型）另有其他各类型策略，请参阅官方文档 -->
+				<!-- TimeBasedTriggeringPolicy需要和filePattern配套使用，由于filePattern配置的时间最小粒度是dd天，所以表示每一天新建一个文件保存日志。SizeBasedTriggeringPolicy表示当文件大小大于指定size时，生成新的文件保存日志。 -->
+				<TimeBasedTriggeringPolicy modulate="true"
+					interval="1" />
+				<!-- 此处为每个文件大小策略限制，使用它一般会在文件中filePattern采用%i模式 -->
+				<!-- <SizeBasedTriggeringPolicy size="128KB" /> -->
+			</Policies>
+			<!-- 最多备份30天以内的日志，此处为策略限制，Delete中可以按自己需要用正则表达式编写 -->
+			<!-- DefaultRolloverStrategy字段中加入max=“30”经测试是配合SizeBasedTriggeringPolicy限制%i的存在数量，并没有发现是网上流传的是最多保存多少个文件的限制，也或许是我写的有问题 -->
+			<DefaultRolloverStrategy>
+				<Delete basePath="${LOG_BASE_HOME}${PROJECT_NAME}/" maxDepth="1">
+					<IfFileName glob="catalina_*.out" />
+					<IfLastModified age="15d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+
+		<!-- 系统错误日志，也就是全量日志，按天备份一个日志 catalina.out -->
+		<!-- fileName为生成的文件名，x为路径，也可以采用相对路径模式，filePattern为时间到达后产生新日志，旧日志的文件名 -->
+		<RollingFile name="WarnFile" fileName="${LOG_BASE_HOME}${PROJECT_NAME}/localhost.out"
+			filePattern="${LOG_BASE_HOME}${PROJECT_NAME}/localhost_%d{yyyy-MM-dd}.out">
+			<!-- 输出格式 -->
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %5p] %c.%M %m%n" />
+			<Policies>
+				<!-- 每1天更新一次，此处查阅网上和官方示例中，都是以小时出现，我测试是以天为单位。（官方文档中说明按item类型是否是小时，但没找到在哪里设置item类型）另有其他各类型策略，请参阅官方文档 -->
+				<!-- TimeBasedTriggeringPolicy需要和filePattern配套使用，由于filePattern配置的时间最小粒度是dd天，所以表示每一天新建一个文件保存日志。SizeBasedTriggeringPolicy表示当文件大小大于指定size时，生成新的文件保存日志。 -->
+				<TimeBasedTriggeringPolicy modulate="true"
+					interval="1" />
+				<!-- 此处为每个文件大小策略限制，使用它一般会在文件中filePattern采用%i模式 -->
+				<!-- <SizeBasedTriggeringPolicy size="128KB" /> -->
+			</Policies>
+			<!-- 最多备份30天以内的日志，此处为策略限制，Delete中可以按自己需要用正则表达式编写 -->
+			<!-- DefaultRolloverStrategy字段中加入max=“30”经测试是配合SizeBasedTriggeringPolicy限制%i的存在数量，并没有发现是网上流传的是最多保存多少个文件的限制，也或许是我写的有问题 -->
+			<DefaultRolloverStrategy>
+				<Delete basePath="${LOG_BASE_HOME}${PROJECT_NAME}/" maxDepth="1">
+					<IfFileName glob="localhost_*.out" />
+					<IfLastModified age="15d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+	</appenders>
+
+	<loggers>
+
+		<root level="info">
+			<appender-ref ref="Console" />
+			<appender-ref ref="DebugFile" />
+		</root>
+
+		<logger name="warn" level="info" additivity="true">
+			<appender-ref ref="WarnFile" />
+		</logger>
+
+	</loggers>
+</Configuration>

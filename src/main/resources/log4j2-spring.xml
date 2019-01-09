@@ -82,7 +82,6 @@ monitorInterval: Log4j2能够自动检测此配置文件是否修改, 设置间�
 		 -->
 		<RollingFile name="ErrorFile" fileName="${LOG_BASE_HOME}${PROJECT_NAME}/error.out"
 			filePattern="${LOG_BASE_HOME}${PROJECT_NAME}/$${date:yyyy-MM-dd}_error/error_%d{yyyy-MM-dd-HH}_%i.log.zip">
-			<!-- 过滤器，onMatch="DENY" onMatch="ACCEPT"匹配到ERROR级别的就放行 ，onMismatch="DENY" 没有匹配到的其他信息过滤掉 -->
 			<ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %5p] %c{1}.%M %m%n" />
 			<Policies>
@@ -120,9 +119,10 @@ monitorInterval: Log4j2能够自动检测此配置文件是否修改, 设置间�
 
 	<loggers>
 
-		<root level="info">
+		<root level="debug">
 			<appender-ref ref="Console" />
 			<appender-ref ref="DebugFile" />
+			<appender-ref ref="ErrorFile"/>
 		</root>
 		<!-- 
 		additivity="true 表示不只是在当前logger打印，也会在root打印
@@ -136,9 +136,10 @@ monitorInterval: Log4j2能够自动检测此配置文件是否修改, 设置间�
 		<!--过滤掉spring的一些无用的信息 如果要过滤其他包路径的信息，比如mybatis等，可以继续写logger -->
         <logger name="org.springframework" level="error" additivity="true"></logger>
         
-        <logger name="com.wql" level="info" additivity="true">
+        <!-- 这种方式，可以过滤到com.wql包下的error日志，但是其他级别的日志捕获不到了，暂时不知道什么原因，所以，我有把ErrorFile放进了root -->
+        <!-- <logger name="com.wql" level="info" additivity="false">
         	<appender-ref ref="ErrorFile"/>
-        </logger>
+        </logger> -->
 
 	</loggers>
 </Configuration>

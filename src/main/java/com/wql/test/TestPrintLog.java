@@ -73,14 +73,14 @@ public class TestPrintLog {
 	@Async
 	public void testPringLog7(){
 		for(int i = 0;i<99999999;i++){
-			logger.error("错误日志打印测试->{}",LocalDateTime.now().toString());
+			logger.info("错误日志打印测试->{}",LocalDateTime.now().toString());
 			//Thread.sleep(50);
 		}
 	}
 	@Async
 	public void testPringLog8(){
 		for(int i = 0;i<99999999;i++){
-			logger.info("错误日志打印测试->{}",LocalDateTime.now().toString());
+			logger.debug("错误日志打印测试->{}",LocalDateTime.now().toString());
 			//Thread.sleep(50);
 		}
 	}

@@ -105,6 +105,13 @@ monitorInterval: Log4j2能够自动检测此配置文件是否修改, 设置间�
 				maxDepth:要访问的目录的最大级别数。
 					值为0表示仅访问起始文件（基本路径本身），除非被安全管理者拒绝。
 					Integer.MAX_VALUE的值表示应该访问所有级别。默认为1，意思是指定基本目录中的文件。
+					例如：
+					${LOG_BASE_HOME}${PROJECT_NAME}/$${date:yyyy-MM-dd}_error/error_%d{yyyy-MM-dd-HH}_%i.log.zip
+					${LOG_BASE_HOME}${PROJECT_NAME}是0级,$${date:yyyy-MM-dd}_error是1级，error_%d{yyyy-MM-dd-HH}_%i.log.zip是2级
+					如果maxDepth=3，那么程序会遍历maxDepth=0,1,2,3级别目录下的所有xx文件
+					底层代码原理类似:
+						Path startingDir = Paths.get("D:\\test\\git");
+        				Stream<Path> walk = Files.walk(startingDir, 3, FileVisitOption.FOLLOW_LINKS);
 			-->
 			<DefaultRolloverStrategy max="30">
 				<Delete basePath="${LOG_BASE_HOME}${PROJECT_NAME}/" maxDepth="2">

@@ -3,6 +3,9 @@ package com.wql.test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * a b
+ */
 public class TestLog {
 	private static final Logger logger = LogManager.getLogger(TestLog.class);
 	

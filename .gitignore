@@ -1,5 +1,11 @@
-/bin/
 /target/
+
+# eclipse忽略
+/bin/
 /.settings/*
 .classpath
 .project
+
+# idea忽略
+.idea
+*.iml

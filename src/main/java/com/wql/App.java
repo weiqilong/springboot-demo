@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 @EnableTransactionManagement
-@ComponentScan(basePackages = { "com.wql" })
+//@ComponentScan(basePackages = { "com.wql" })
 @EnableAsync
 public class App {
 	public static void main(String[] args) {

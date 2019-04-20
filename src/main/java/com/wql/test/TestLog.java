@@ -4,8 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * a b
- * master master fffffff
+ * 这里的注释是学习git的
+ * a
  */
 public class TestLog {
 	private static final Logger logger = LogManager.getLogger(TestLog.class);

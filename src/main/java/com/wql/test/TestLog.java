@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * 这里的注释是学习git的
  * a
+ * b
  */
 public class TestLog {
 	private static final Logger logger = LogManager.getLogger(TestLog.class);

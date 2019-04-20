@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * a b
- * master master xxxxxxx
+ * master master fffffff
  */
 public class TestLog {
 	private static final Logger logger = LogManager.getLogger(TestLog.class);

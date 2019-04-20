@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
  * b
  * c
  * d
+ * e
  */
 public class TestLog {
 	private static final Logger logger = LogManager.getLogger(TestLog.class);

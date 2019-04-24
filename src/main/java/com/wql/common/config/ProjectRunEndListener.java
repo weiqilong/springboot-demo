@@ -20,20 +20,20 @@ public class ProjectRunEndListener implements CommandLineRunner{
 	private static final Logger loggerWarn = LogManager.getLogger("warn");
 	@Autowired
 	private TestPrintLog testPrintLog;
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 		logger.info("程序启动监听-->{}-->{}","AA","BB");
 		loggerWarn.info("程序启动监听 warn-->{}-->{}","AA","BB");
 		
-		testPrintLog.testPringLog1();
+		/*testPrintLog.testPringLog1();
 		testPrintLog.testPringLog2();
 		testPrintLog.testPringLog3();
 		testPrintLog.testPringLog4();
 		testPrintLog.testPringLog5();
 		testPrintLog.testPringLog6();
 		testPrintLog.testPringLog7();
-		testPrintLog.testPringLog8();
+		testPrintLog.testPringLog8();*/
 		
 	}
 }

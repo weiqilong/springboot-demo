@@ -116,7 +116,8 @@ monitorInterval: Log4j2能够自动检测此配置文件是否修改, 设置间�
 			<DefaultRolloverStrategy max="30">
 				<Delete basePath="${LOG_BASE_HOME}${PROJECT_NAME}/" maxDepth="2">
 					<!-- 匹配删除基本目录下所有满足参数glob等于*/error_*.zip和超过15天或更早的文件。 -->
-					<IfFileName glob="*/error_*.zip" />
+					<!-- 注意！扩展名一定要写全，否则删除不了，error_*.log.zip能删除，error_*.zip就删除不了 -->
+					<IfFileName glob="*/error_*.log.zip" />
 					<IfLastModified age="30d" />
 				</Delete>
 			</DefaultRolloverStrategy>

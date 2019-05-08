@@ -86,8 +86,9 @@
         </dependency>
     </dependencies>
     <build>
+        <!-- 写上这个，打包的jar名字就是这个名字，不写的话，会加上版本号，太长了 -->
+        <finalName>${artifactId}</finalName>
         <plugins>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
